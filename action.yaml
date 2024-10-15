@@ -50,8 +50,11 @@ runs:
 
     - name: Secrets Scanning 
       if: inputs.scan-only-runner-token == 'false'
-      run: docker run -v /$(pwd)/${{ inputs.path }}:/scan zricethezav/gitleaks@sha256:75bdb2b2f4db213cde0b8295f13a88d6b333091bbfbf3012a4e083d00d31caba detect --no-git --source /scan
-      shell: bash 
+      run: |
+        for path in ${{ inputs.path }}; do
+          docker run -v $(pwd)/$path:/scan zricethezav/gitleaks@sha256:75bdb2b2f4db213cde0b8295f13a88d6b333091bbfbf3012a4e083d00d31caba detect --no-git --source /scan
+        done
+      shell: bash
             
     - name: Set up Node.js
       uses: actions/setup-node@26961cf329f22f6837d5f54c3efd76b480300ace #3.03
