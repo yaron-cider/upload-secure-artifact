@@ -6,14 +6,15 @@ const core = require('@actions/core');
 
 
 async function main(github, context, artifactName,artifactPath,retentionDays,compressionLevel) {
+  console.log("inside main")
   run();
-  const artifactClient = new DefaultArtifactClient();
+  //const artifactClient = new DefaultArtifactClient();
 
-  try {
-    await uploadArtifact(artifactClient, artifactName, artifactPath,retentionDays,compressionLevel);
-  } catch (error) {
-    core.setFailed(error.message);
-  }
+  //try {
+  //  await uploadArtifact(artifactClient, artifactName, artifactPath,retentionDays,compressionLevel);
+  //} catch (error) {
+  //  core.setFailed(error.message);
+  //}
 }
 
 async function uploadArtifact(artifactClient, artifactName, artifactPath,retentionDays,compressionLevel) {
