@@ -51,7 +51,7 @@ runs:
     - name: Secrets Scanning 
       if: inputs.scan-only-runner-token == 'false'
       run: |
-        for path in ${{ inputs.path }}; do
+        for path in "${{ inputs.path }}"; do
           echo "Running1: docker run -v $(pwd)/$path:/scan zricethezav/gitleaks@sha256:75bdb2b2f4db213cde0b8295f13a88d6b333091bbfbf3012a4e083d00d31caba detect --no-git --source /scan"
         done
         
