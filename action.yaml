@@ -73,8 +73,9 @@ runs:
     - uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea #7.01
       with:
          script: |       
+          const path = "${{ inputs.path }}".split('\n').join('')          
           const script = require('${{github.action_path}}/index.js')
-          script({"github":github, "context":context,artifactName:"${{ inputs.name }}",artifactPath:"${{ inputs.path }}",retentionDays:"${{ inputs.retention-days }}",compressionLevel:"${{ inputs.compression-level }}"})
+          script({"github":github, "context":context,artifactName:"${{ inputs.name }}",artifactPath:path,retentionDays:"${{ inputs.retention-days }}",compressionLevel:"${{ inputs.compression-level }}"})
 
           
      
