@@ -1,9 +1,8 @@
 const { DefaultArtifactClient } = require("@actions/artifact");
-import { run } from '@actions/artifact';
 const fs = require('fs');
 const path = require('path');
 const core = require('@actions/core');
-
+const run = require("@actions/artifact"); 
 
 async function main(github, context, artifactName,artifactPath,retentionDays,compressionLevel) {
   console.log("inside main")
