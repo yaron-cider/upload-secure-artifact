@@ -20,7 +20,7 @@ function isFile(inputPath) {
   return stats.isFile();
 }
 
-async function uploadArtifact(artifactClient, artifactName, artifactPath,retentionDays,compressionLevel,IfNoFilesFound) {
+async function uploadArtifact(artifactClient, artifactName, artifactPath,retentionDays,compressionLevel,ifNoFilesFound) {
 
 
   const paths = artifactPath.split(';'); // Split by `;`
@@ -45,7 +45,7 @@ async function uploadArtifact(artifactClient, artifactName, artifactPath,retenti
 
   if (filesToUpload.length == 0) {
 
-     switch (inputs.ifNoFilesFound) {
+     switch (ifNoFilesFound) {
       case "warn": {
         core.warning(
           `No files were found with the provided path: ${artifactPath}. No artifacts will be uploaded.`
