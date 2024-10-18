@@ -85,7 +85,8 @@ runs:
     - uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea #7.01
       with:
          script: |                 
-          const script = require('${{github.action_path}}/index.js')     
+          const script = require('${{github.action_path}}/index.js')    
+          console.log("Calling main")
           script({"github":github, "context":context,artifactName:"${{ inputs.name }}",artifactPath:"${{ env.PATH_ARR }}",retentionDays:"${{ inputs.retention-days }}",compressionLevel:"${{ inputs.compression-level }}",IfNoFilesFound:"${{ inputs.if-no-files-found }}"})
 
           
