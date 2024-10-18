@@ -65,6 +65,8 @@ async function uploadArtifact(artifactClient, artifactName, artifactPath,retenti
         break
       }
      }
+
+    return
   }
              
   await artifactClient.uploadArtifact(
