@@ -4,7 +4,7 @@ const path = require('path');
 const core = require('@actions/core');
 const run = require("@actions/artifact"); 
 
-async function main(github, context, artifactName,artifactPath,retentionDays,compressionLevel) {
+async function main(github, context, artifactName,artifactPath,retentionDays,compressionLevel,IfNoFilesFound) {
   console.log("inside main")
   console.log(artifactPath)
   const artifactClient = new DefaultArtifactClient();
@@ -44,8 +44,26 @@ async function uploadArtifact(artifactClient, artifactName, artifactPath,retenti
   }
 
   if (filesToUpload.length == 0) {
-    console.warn("No files were found with the provided path: /not. No artifacts will be uploaded.");
-    return
+
+     switch (inputs.ifNoFilesFound) {
+      case "warn": {
+        core.warning(
+          `No files were found with the provided path: ${artifactPath}. No artifacts will be uploaded.`
+        )
+        break
+      }
+      case "error": {
+        core.setFailed(
+          `No files were found with the provided path: ${artifactPath}. No artifacts will be uploaded.`
+        )
+        break
+      }
+      case "ignore": {
+        core.info(
+          `No files were found with the provided path: ${artifactPath}. No artifacts will be uploaded.`
+        )
+        break
+      }  
   }
              
   await artifactClient.uploadArtifact(
@@ -125,8 +143,8 @@ async function populateFilesWithFullPath(rootPath) {
   return files;
 }
 
-module.exports = function ({ github, context , artifactName,artifactPath,retentionDays,compressionLevel }) { 
-   main(github, context, artifactName,artifactPath,retentionDays,compressionLevel);
+module.exports = function ({ github, context , artifactName,artifactPath,retentionDays,compressionLevel, IfNoFilesFound }) { 
+   main(github, context, artifactName,artifactPath,retentionDays,compressionLevel, IfNoFilesFound);
 }
 
 
