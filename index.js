@@ -8,29 +8,34 @@ async function main(github, context, artifactName,artifactPath,retentionDays,com
   console.log("inside main")
   
   const artifactClient = new DefaultArtifactClient();
-  console.log("calling run")
-  artifactClient.run();
-  //try {
-  //  await uploadArtifact(artifactClient, artifactName, artifactPath,retentionDays,compressionLevel);
-  //} catch (error) {
-  //  core.setFailed(error.message);
-  //}
+  try {
+    await uploadArtifact(artifactClient, artifactName, artifactPath,retentionDays,compressionLevel);
+  } catch (error) {
+    core.setFailed(error.message);
+  }
 }
 
 async function uploadArtifact(artifactClient, artifactName, artifactPath,retentionDays,compressionLevel) {
 
-  if (!fs.existsSync(artifactPath)){
+
+  const paths = artifactPath.split(';'); // Split by `;`
+  let filesToUpload = [];
+
+  for (const path of paths) {
+    const files = await populateFilesWithFullPath(path.trim()); // Get files for each path
+    filesToUpload = filesToUpload.concat(files); // Accumulate files
+  }
+
+  if (len(filesToUpload) == 0 {
     console.warn("No files were found with the provided path: /not. No artifacts will be uploaded.");
     return
   }
-  
-  foundPath = hasGitFolderWithGitHubRunnerToken(artifactPath)
-  if (foundPath) {
-    throw new Error(`Found GITHUB_TOKEN in artifact, under path ${foundPath}`);
-  }                
 
-  const filesToUpload = await populateFilesWithFullPath(artifactPath);
-
+  for (const path of paths) {
+     if (hasGitFolderWithGitHubRunnerToken(artifactPath))
+        throw new Error(`Found GITHUB_TOKEN in artifact, under path ${foundPath}`);
+  }
+             
   await artifactClient.uploadArtifact(
     artifactName,
     filesToUpload,
