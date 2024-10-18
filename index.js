@@ -43,7 +43,7 @@ async function uploadArtifact(artifactClient, artifactName, artifactPath,retenti
     }
   }
 
-  if (len(filesToUpload) == 0) {
+  if (filesToUpload.length == 0) {
     console.warn("No files were found with the provided path: /not. No artifacts will be uploaded.");
     return
   }
