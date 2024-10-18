@@ -26,7 +26,7 @@ async function uploadArtifact(artifactClient, artifactName, artifactPath,retenti
     filesToUpload = filesToUpload.concat(files); // Accumulate files
   }
 
-  if (len(filesToUpload) == 0 {
+  if (len(filesToUpload) == 0) {
     console.warn("No files were found with the provided path: /not. No artifacts will be uploaded.");
     return
   }
