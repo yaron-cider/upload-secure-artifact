@@ -6,7 +6,7 @@ const run = require("@actions/artifact");
 
 async function main(github, context, artifactName,artifactPath,retentionDays,compressionLevel) {
   console.log("inside main")
-  
+  console.log(artifactPath)
   const artifactClient = new DefaultArtifactClient();
   try {
     await uploadArtifact(artifactClient, artifactName, artifactPath,retentionDays,compressionLevel);
