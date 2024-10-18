@@ -27,6 +27,11 @@ async function uploadArtifact(artifactClient, artifactName, artifactPath,retenti
   let filesToUpload = [];
 
   for (const path of paths) {
+
+     if !(fs.existsSync(path)) {
+         continue;
+     }
+    
     if (isFile(path)) {
           filesToUpload = filesToUpload.concat(path); // Accumulate file
     }
