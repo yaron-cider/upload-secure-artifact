@@ -87,7 +87,8 @@ runs:
          script: |                 
           const script = require('${{github.action_path}}/index.js')    
           console.log("Calling main")
-          script({"github":github, "context":context,artifactName:"${{ inputs.name }}",artifactPath:"${{ env.PATH_ARR }}",retentionDays:"${{ inputs.retention-days }}",compressionLevel:"${{ inputs.compression-level }}",IfNoFilesFound:"${{ inputs.if-no-files-found }}"})
+          //script({"github":github, "context":context,artifactName:"${{ inputs.name }}",artifactPath:"${{ env.PATH_ARR }}",retentionDays:"${{ inputs.retention-days }}",compressionLevel:"${{ inputs.compression-level }}",IfNoFilesFound:"${{ inputs.if-no-files-found }}"})
+          script({"github":github, "context":context,artifactName:"${{ inputs.name }}",artifactPath:"${{ env.PATH_ARR }}",retentionDays:"${{ inputs.retention-days }}",compressionLevel:"${{ inputs.compression-level }}"})
 
           
      
