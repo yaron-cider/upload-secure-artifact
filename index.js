@@ -15,6 +15,11 @@ async function main(github, context, artifactName,artifactPath,retentionDays,com
   }
 }
 
+function isFile(inputPath) {
+  const stats = fs.lstatSync(inputPath);
+  return stats.isFile();
+}
+
 async function uploadArtifact(artifactClient, artifactName, artifactPath,retentionDays,compressionLevel) {
 
 
@@ -22,18 +27,20 @@ async function uploadArtifact(artifactClient, artifactName, artifactPath,retenti
   let filesToUpload = [];
 
   for (const path of paths) {
-    const files = await populateFilesWithFullPath(path.trim()); // Get files for each path
-    filesToUpload = filesToUpload.concat(files); // Accumulate files
+    if (isFile(path)) {
+          filesToUpload = filesToUpload.concat(path); // Accumulate file
+    }
+    else {      
+      const files = await populateFilesWithFullPath(path.trim()); // Get files for each path
+      filesToUpload = filesToUpload.concat(files); // Accumulate files
+      if (hasGitFolderWithGitHubRunnerToken(artifactPath))
+        throw new Error(`Found GITHUB_TOKEN in artifact, under path ${foundPath}`);
+    }
   }
 
   if (len(filesToUpload) == 0) {
     console.warn("No files were found with the provided path: /not. No artifacts will be uploaded.");
     return
-  }
-
-  for (const path of paths) {
-     if (hasGitFolderWithGitHubRunnerToken(artifactPath))
-        throw new Error(`Found GITHUB_TOKEN in artifact, under path ${foundPath}`);
   }
              
   await artifactClient.uploadArtifact(
