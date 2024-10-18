@@ -146,6 +146,3 @@ async function populateFilesWithFullPath(rootPath) {
 module.exports = function ({ github, context , artifactName,artifactPath,retentionDays,compressionLevel,IfNoFilesFound }) { 
    main(github, context, artifactName,artifactPath,retentionDays,compressionLevel, IfNoFilesFound);
 }
-
-
-
