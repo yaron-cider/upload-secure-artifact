@@ -28,6 +28,15 @@ inputs:
       Higher levels will result in better compression, but will take longer to complete.
       For large files that are not easily compressed, a value of 0 is recommended for significantly faster uploads.
     default: '6'
+  if-no-files-found:
+    description: >
+      The desired behavior if no files are found using the provided path.
+
+      Available Options:
+        warn: Output a warning but do not fail the action
+        error: Fail the action with an error message
+        ignore: Do not output any warnings or errors, the action does not fail
+    default: 'warn'
 
 outputs:
   artifact-id:
