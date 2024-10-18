@@ -55,7 +55,7 @@ runs:
         OUTPUT_PATH=""
         for path in $(echo $INPUT_PATH | tr "|" "\n")
         do        
-          OUTPUT_PATH+=path
+          OUTPUT_PATH+=$path
           OUTPUT_PATH+=";"
           echo "run3" $path
           echo "Running: docker run -v $(pwd)/$path:/scan zricethezav/gitleaks@sha256:75bdb2b2f4db213cde0b8295f13a88d6b333091bbfbf3012a4e083d00d31caba detect --no-git --source /scan"
