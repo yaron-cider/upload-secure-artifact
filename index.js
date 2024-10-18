@@ -9,7 +9,7 @@ async function main(github, context, artifactName,artifactPath,retentionDays,com
   console.log(artifactPath)
   const artifactClient = new DefaultArtifactClient();
   try {
-    await uploadArtifact(artifactClient, artifactName, artifactPath,retentionDays,compressionLevel);
+    await uploadArtifact(artifactClient, artifactName, artifactPath,retentionDays,compressionLevel,IfNoFilesFound);
   } catch (error) {
     core.setFailed(error.message);
   }
@@ -20,7 +20,7 @@ function isFile(inputPath) {
   return stats.isFile();
 }
 
-async function uploadArtifact(artifactClient, artifactName, artifactPath,retentionDays,compressionLevel) {
+async function uploadArtifact(artifactClient, artifactName, artifactPath,retentionDays,compressionLevel,IfNoFilesFound) {
 
 
   const paths = artifactPath.split(';'); // Split by `;`
@@ -143,7 +143,7 @@ async function populateFilesWithFullPath(rootPath) {
   return files;
 }
 
-module.exports = function ({ github, context , artifactName,artifactPath,retentionDays,compressionLevel, IfNoFilesFound }) { 
+module.exports = function ({ github, context , artifactName,artifactPath,retentionDays,compressionLevel,IfNoFilesFound }) { 
    main(github, context, artifactName,artifactPath,retentionDays,compressionLevel, IfNoFilesFound);
 }
 
