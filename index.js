@@ -28,7 +28,7 @@ async function uploadArtifact(artifactClient, artifactName, artifactPath,retenti
 
   for (const path of paths) {
 
-     if !(fs.existsSync(path)) {
+     if (!fs.existsSync(path)) {
          continue;
      }
     
