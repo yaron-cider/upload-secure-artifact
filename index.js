@@ -63,7 +63,8 @@ async function uploadArtifact(artifactClient, artifactName, artifactPath,retenti
           `No files were found with the provided path: ${artifactPath}. No artifacts will be uploaded.`
         )
         break
-      }  
+      }
+     }
   }
              
   await artifactClient.uploadArtifact(
