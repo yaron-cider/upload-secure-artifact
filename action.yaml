@@ -77,8 +77,6 @@ runs:
       with:
          script: |                 
           const script = require('${{github.action_path}}/index.js')     
-          console.log("github-script inside")
-          console.log("${{ env.PATH_ARR }}")
           script({"github":github, "context":context,artifactName:"${{ inputs.name }}",artifactPath:"${{ env.PATH_ARR }}",retentionDays:"${{ inputs.retention-days }}",compressionLevel:"${{ inputs.compression-level }}"})
 
           
