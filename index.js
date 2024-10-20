@@ -5,7 +5,6 @@ const core = require('@actions/core');
 const run = require("@actions/artifact"); 
 
 async function main(github, context, artifactName,artifactPath,retentionDays,compressionLevel,ifNoFilesFound, includeHiddenFiles) {
-  console.log("inside main");
 
   const artifactClient = new DefaultArtifactClient();
   try {
@@ -22,7 +21,6 @@ function isFile(inputPath) {
 
 async function uploadArtifact(artifactClient, artifactName, artifactPath,retentionDays,compressionLevel,ifNoFilesFound,includeHiddenFiles) {
 
-  console.log("upload-artifact inside");
 
   const paths = artifactPath.split(';'); // Split by `;`
   let filesToUpload = [];
@@ -38,14 +36,11 @@ async function uploadArtifact(artifactClient, artifactName, artifactPath,retenti
     }
     else {      
       const files = await populateFilesWithFullPath(path.trim(),includeHiddenFiles); // Get files for each path
-      console.log("After populate")
-      console.log(path)
       filesToUpload = filesToUpload.concat(files); // Accumulate files
       if (hasGitFolderWithGitHubRunnerToken(artifactPath))
         throw new Error(`Found GITHUB_TOKEN in artifact, under path ${foundPath}`);
     }
   }
-  console.log("reached here")
   if (filesToUpload.length == 0) {
 
      switch (ifNoFilesFound) {
@@ -71,8 +66,7 @@ async function uploadArtifact(artifactClient, artifactName, artifactPath,retenti
 
     return
   }
-  console.log("uploading!")  
-  console.log(filesToUpload)            
+          
   await artifactClient.uploadArtifact(
     artifactName,
     filesToUpload,
@@ -84,11 +78,9 @@ async function uploadArtifact(artifactClient, artifactName, artifactPath,retenti
 
 function findGitFolder(startPath) {
 
-    console.log("findGitFolder")
     try
     {
       if (!fs.existsSync(startPath)) {
-          console.log("Start path does not exist.");
           return null;
       }
 
@@ -110,7 +102,6 @@ function findGitFolder(startPath) {
       }
     }
     catch (exceptionVar) {
-      console.log("error! in findGitFolder")
       console.log(exceptionVar)
     }
 
@@ -142,11 +133,9 @@ function hasGitFolderWithGitHubRunnerToken(pathToCheck) {
   } catch (err) {
     console.log(err)
   }
-  console.log("ended hasGitFolderWithGitHubRunnerToken")
 }
 
 async function populateFilesWithFullPath(rootPath,includeHiddenFiles) {
-  console.log("populateFilesWithFullPath {rootPath}")
   const fs = require('fs').promises; // Use promises for cleaner async/await usage
   const path = require('path');
   const files = [];
@@ -157,9 +146,7 @@ async function populateFilesWithFullPath(rootPath,includeHiddenFiles) {
 
     const stats = await fs.stat(filePath);
     if (stats.isFile()) {
-      console.log("before calling isHiddenFile")
       if (isHiddenFile(filePath)){
-         console.log("after hfile")
         if (includeHiddenFiles){
           files.push(filePath);
         }
@@ -177,9 +164,6 @@ async function populateFilesWithFullPath(rootPath,includeHiddenFiles) {
 }
 
 function isHiddenFile(filePath) {
-  return true
-  console.log("isHiddenFile")
-  console.log(filePath)
   const path = require('path');
   return path.basename(filePath).startsWith('.');
 }
