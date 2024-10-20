@@ -71,6 +71,7 @@ runs:
         do        
           OUTPUT_PATH+=$path
           OUTPUT_PATH+=";"
+          echo "Scanning path $(pwd)/$path"
           docker run -v $(pwd)/$path:/scan zricethezav/gitleaks@sha256:75bdb2b2f4db213cde0b8295f13a88d6b333091bbfbf3012a4e083d00d31caba detect --no-git --source /scan
         done
         echo "PATH_ARR=$OUTPUT_PATH" >> $GITHUB_ENV
