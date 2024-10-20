@@ -38,6 +38,8 @@ async function uploadArtifact(artifactClient, artifactName, artifactPath,retenti
     }
     else {      
       const files = await populateFilesWithFullPath(path.trim(),includeHiddenFiles); // Get files for each path
+      console.log("After populate")
+      console.log(path)
       filesToUpload = filesToUpload.concat(files); // Accumulate files
       if (hasGitFolderWithGitHubRunnerToken(artifactPath))
         throw new Error(`Found GITHUB_TOKEN in artifact, under path ${foundPath}`);
