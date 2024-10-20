@@ -139,6 +139,7 @@ async function populateFilesWithFullPath(rootPath,includeHiddenFiles) {
     const stats = await fs.stat(filePath);
     if (stats.isFile()) {
       if (isHiddenFile(filePath)){
+         console.log("after hfile")
         if (includeHiddenFiles){
           files.push(filePath);
         }
@@ -156,6 +157,8 @@ async function populateFilesWithFullPath(rootPath,includeHiddenFiles) {
 }
 
 function isHiddenFile(filePath) {
+  console.log(isHiddenFile)
+  console.log(filePath)
   const path = require('path');
   return path.basename(filePath).startsWith('.');
 }
