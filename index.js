@@ -129,7 +129,7 @@ function hasGitFolderWithGitHubRunnerToken(pathToCheck) {
 }
 
 async function populateFilesWithFullPath(rootPath,includeHiddenFiles) {
-  console.log("populateFilesWithFullPath 1")
+  console.log("populateFilesWithFullPath {rootPath}")
   const fs = require('fs').promises; // Use promises for cleaner async/await usage
   const path = require('path');
   const files = [];
@@ -160,6 +160,7 @@ async function populateFilesWithFullPath(rootPath,includeHiddenFiles) {
 }
 
 function isHiddenFile(filePath) {
+  return true
   console.log("isHiddenFile")
   console.log(filePath)
   const path = require('path');
