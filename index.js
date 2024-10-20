@@ -156,6 +156,7 @@ async function populateFilesWithFullPath(rootPath,includeHiddenFiles) {
 }
 
 function isHiddenFile(filePath) {
+  const path = require('path');
   return path.basename(filePath).startsWith('.');
 }
 
