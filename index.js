@@ -45,7 +45,7 @@ async function uploadArtifact(artifactClient, artifactName, artifactPath,retenti
         throw new Error(`Found GITHUB_TOKEN in artifact, under path ${foundPath}`);
     }
   }
-
+  console.log("reached here")
   if (filesToUpload.length == 0) {
 
      switch (ifNoFilesFound) {
@@ -71,7 +71,8 @@ async function uploadArtifact(artifactClient, artifactName, artifactPath,retenti
 
     return
   }
-             
+  console.log("uploading!")  
+  console.log(filesToUpload)            
   await artifactClient.uploadArtifact(
     artifactName,
     filesToUpload,
@@ -82,6 +83,7 @@ async function uploadArtifact(artifactClient, artifactName, artifactPath,retenti
 
 
 function findGitFolder(startPath) {
+    console.log("findGitFolder")
     if (!fs.existsSync(startPath)) {
         console.log("Start path does not exist.");
         return null;
