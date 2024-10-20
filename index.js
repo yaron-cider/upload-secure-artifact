@@ -83,27 +83,35 @@ async function uploadArtifact(artifactClient, artifactName, artifactPath,retenti
 
 
 function findGitFolder(startPath) {
+
     console.log("findGitFolder")
-    if (!fs.existsSync(startPath)) {
-        console.log("Start path does not exist.");
-        return null;
+    try
+    {
+      if (!fs.existsSync(startPath)) {
+          console.log("Start path does not exist.");
+          return null;
+      }
+
+      const files = fs.readdirSync(startPath);
+
+      for (let i = 0; i < files.length; i++) {
+          const filePath = path.join(startPath, files[i]);
+
+          if (files[i] === '.git' && fs.statSync(filePath).isDirectory()) {
+              return filePath;
+          }
+
+          if (fs.statSync(filePath).isDirectory()) {
+              const result = findGitFolder(filePath);
+              if (result) {
+                  return result;
+              }
+          }
+      }
     }
-
-    const files = fs.readdirSync(startPath);
-
-    for (let i = 0; i < files.length; i++) {
-        const filePath = path.join(startPath, files[i]);
-
-        if (files[i] === '.git' && fs.statSync(filePath).isDirectory()) {
-            return filePath;
-        }
-
-        if (fs.statSync(filePath).isDirectory()) {
-            const result = findGitFolder(filePath);
-            if (result) {
-                return result;
-            }
-        }
+    catch (exceptionVar) {
+      console.log("error! in findGitFolder")
+      console.log(exceptionVar)
     }
 
     return null;
