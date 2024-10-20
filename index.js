@@ -5,6 +5,8 @@ const core = require('@actions/core');
 const run = require("@actions/artifact"); 
 
 async function main(github, context, artifactName,artifactPath,retentionDays,compressionLevel,ifNoFilesFound, includeHiddenFiles) {
+  console.log("inside main");
+
   const artifactClient = new DefaultArtifactClient();
   try {
     await uploadArtifact(artifactClient, artifactName, artifactPath,retentionDays,compressionLevel,ifNoFilesFound,includeHiddenFiles);
@@ -20,6 +22,7 @@ function isFile(inputPath) {
 
 async function uploadArtifact(artifactClient, artifactName, artifactPath,retentionDays,compressionLevel,ifNoFilesFound,includeHiddenFiles) {
 
+  console.log("upload-artifact inside");
 
   const paths = artifactPath.split(';'); // Split by `;`
   let filesToUpload = [];
