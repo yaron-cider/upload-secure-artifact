@@ -140,6 +140,7 @@ async function populateFilesWithFullPath(rootPath,includeHiddenFiles) {
 
     const stats = await fs.stat(filePath);
     if (stats.isFile()) {
+      console.log("before calling isHiddenFile")
       if (isHiddenFile(filePath)){
          console.log("after hfile")
         if (includeHiddenFiles){
