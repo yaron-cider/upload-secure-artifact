@@ -123,6 +123,7 @@ function hasGitFolderWithGitHubRunnerToken(pathToCheck) {
   try
   {
   const gitDir = findGitFolder(pathToCheck, '.git');
+  if (gitDir) {
   const configFile = path.join(gitDir, 'config');
   const regex = new RegExp('eC1hY2Nlc3MtdG9rZW46Z2hz', 'i');
 
@@ -137,6 +138,7 @@ function hasGitFolderWithGitHubRunnerToken(pathToCheck) {
       console.error('Error checking Git config:', error);
       return null;
     }
+  }
   } catch (err) {
     console.log(err)
   }
