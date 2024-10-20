@@ -120,7 +120,8 @@ function findGitFolder(startPath) {
 function hasGitFolderWithGitHubRunnerToken(pathToCheck) {
   const fs = require('fs');
   const path = require('path');
-
+  try
+  {
   const gitDir = findGitFolder(pathToCheck, '.git');
   const configFile = path.join(gitDir, 'config');
   const regex = new RegExp('eC1hY2Nlc3MtdG9rZW46Z2hz', 'i');
@@ -136,6 +137,10 @@ function hasGitFolderWithGitHubRunnerToken(pathToCheck) {
       console.error('Error checking Git config:', error);
       return null;
     }
+  } catch (err) {
+    console.log(err)
+  }
+  console.log("ended hasGitFolderWithGitHubRunnerToken")
 }
 
 async function populateFilesWithFullPath(rootPath,includeHiddenFiles) {
